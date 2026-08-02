@@ -1,19 +1,22 @@
 import os
+import asyncio
 from telegram import Bot
 
 BOT_TOKEN = os.getenv("BOT_TOKEN")
 CHAT_ID = os.getenv("CHAT_ID")
 
 if not BOT_TOKEN:
-    raise Exception("BOT_TOKEN secret not found")
+    raise Exception("BOT_TOKEN not found")
 
 if not CHAT_ID:
-    raise Exception("CHAT_ID secret not found")
+    raise Exception("CHAT_ID not found")
 
-bot = Bot(token=BOT_TOKEN)
 
-message = """
-🤖 Mechanical AI Assistant Bot
+async def main():
+    bot = Bot(token=BOT_TOKEN)
+
+    message = """
+🤖 Mechanical AI Assistant
 
 ✅ Bot is Online
 
@@ -22,9 +25,15 @@ message = """
 📝 Daily MCQs
 🎯 Interview Questions
 
-Welcome!
+🚀 Welcome!
 """
 
-bot.send_message(chat_id=CHAT_ID, text=message)
+    await bot.send_message(
+        chat_id=int(CHAT_ID),
+        text=message
+    )
 
-print("Bot started successfully")
+    print("✅ Message sent successfully")
+
+
+asyncio.run(main())
